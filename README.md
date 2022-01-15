@@ -8,9 +8,13 @@ USTH ICT 2022 Distributed Systems
 * Push your commits regularly, with proper commit messages
 * Use pull request for collaborations!
 
+GROUP 7
+
 Group Info
 =======================
 
-* Name 1 (ID1)
-* Name 2 (ID2)
-
+* Trần Đắc Minh (BI10-113)
+* Đặng Gia Linh (BI10-101)
+* Đoàn Đình Nam (BA9-045)
+* Trần Hoàng Minh (BI10-119)
+* Lê Duy Anh (BI9-034)
