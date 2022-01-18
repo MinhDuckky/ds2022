@@ -1,34 +1,34 @@
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netdb.h>
-#include <fcntl.h>
 
-void handle_file(int cli, char *s, int size){
+void handle_file(int cli){
+    // it's client turn to chat, I wait and read message from client
+    printf("Receiving file content.... \n");
+    printf("\n");
 
-    memset(s, 0, size);
-    
-    char filename[100];
+    char s[255];
+    read(cli, s, sizeof(s) + 1);
 
-    int len = read(cli, filename, sizeof(filename));
-    printf("Received file: %s", filename);
-    int file = open(filename, O_RDWR);
+    FILE *file  = fopen("output.txt", "w");
+    fputs(s, file);
 
-    while ((len -  read(cli, s, size)) > 0) {
+    printf("Writing to: \'output.txt\'\n");
 
-        write(file, s, size);
-    }
+    fclose(file);
 
-    close(file);
+    printf("OK\n");
+    char r[4] = "OK";
+    write(cli, r, strlen(r) + 1);
 }
 
 int main() {
     int ss, cli, pid;
     struct sockaddr_in ad;
-    char s[100];
+    char s[255];
     socklen_t ad_length = sizeof(ad);
 
     // create the socket
@@ -52,9 +52,7 @@ int main() {
         if (pid == 0) {
             // I'm the son, I'll serve this client
             printf("Client connected\n");
-            
-            handle_file(cli, s, sizeof(s));
-
+            handle_file(cli);
             return 0;
         }
         else {

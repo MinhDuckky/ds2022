@@ -1,32 +1,44 @@
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netdb.h>
-#include <fcntl.h>
 
-void send_file(int serv, char *s, int size, char *outputfile, char *inputfile){
-    
-    write(serv, outputfile, strlen(outputfile));
+void send_file(int serv, char *filename) {
 
-    printf("Start to transfer file....");
-    int file = open(inputfile, O_RDWR);
+    printf("Sending file content....");
+    printf("\n");
 
-    int len = 0;
+    FILE *file  = fopen(filename, "r");
 
-    while ((len -  read(file, s, size)) > 0) {
+    printf("File: \'%s\'\n", filename);
 
-        write(serv, s, len);
+    char s[255] = {0};
+
+    char *line;
+
+    while (fgets(line, 100, file))
+    {
+        strncat(s, line, 100);
     }
+    printf("%s", s);
+    printf("\n");
+    // send some data to server
 
-    close(file);
+    write(serv, s, sizeof(s) + 1);
+
+    fclose(file);
+
+    // then it's server turn
+    read(serv, s, sizeof(s) + 1);
+
+    printf("Server says: %s\n", s);
 }
 
 int main(int argc, char* argv[]) {
     int so;
-    char s[100];
+    char s[255];
     struct sockaddr_in ad;
 
     socklen_t ad_length = sizeof(ad);
@@ -44,7 +56,6 @@ int main(int argc, char* argv[]) {
 
     // connect to server
     connect(serv, (struct sockaddr *)&ad, ad_length);
-
-    send_file(serv, s, sizeof(s), argv[3], argv[2]);
+    send_file(serv, argv[2]);
 
 }
