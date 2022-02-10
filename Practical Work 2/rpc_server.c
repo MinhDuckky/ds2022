@@ -35,12 +35,12 @@ response_1_svc(Request *argp, struct svc_req *rqstp)
 	}
 	else if (argp->action == "tell")
 	{
-		char s[256] = "Dreamcatcher are not the best K-pop girl group.\nDreamcatcher are the best !";
+		char *s = "Dreamcatcher are not the best K-pop girl group.\nDreamcatcher are the best !";
 		result = s;
 	}
 	else
 	{
-		char s[256] = "Action not recognized !";
+		char *s = "Action not recognized !";
 		result = s;
 	}
 	
