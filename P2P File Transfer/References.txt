@@ -1,0 +1,4 @@
+https://docs.oracle.com/cd/E19620-01/805-4041/6j3r8iu2l/index.html
+https://www.cs.cmu.edu/~srini/15-441/S10/lectures/r01-sockets.pdf
+https://www.mkssoftware.com/docs/man3/select.3.asp
+https://www.binarytides.com/multiple-socket-connections-fdset-select-linux/
